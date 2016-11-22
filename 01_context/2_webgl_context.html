@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> How to get WebGL context </title>
+    <style type="text/css">
+        canvas {
+            border: 2px dotted grey;
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            width: 800px;
+        }
+    </style>
+    <script>
+        var gl = null;
+
+        function getGLContext() {
+            var canvas = document.getElementById("canvas-element-id");
+            if (canvas == null) {
+                alert("Canvas not found!!!");
+                return;
+            }
+
+            // An available context name may vary from browser to browser,
+            // but leading browsers should support a 'wegbl' name.
+            var names = ["webgl",
+                "experimental-webgl",
+                "webkit-3d",
+                "moz-webgl"
+            ];
+            var i = 0;
+            for (i; i < names.length; ++i) {
+                try {
+                    gl = canvas.getContext(names[i]);
+                } catch (e) {}
+                if (gl) break;
+            }
+            if (gl == null) {
+                alert("WebGL is not available");
+            } else {
+                alert("You browser supports a '" + names[i] + "' WebGL context");
+            }
+        }
+    </script>
+</head>
+
+<body onload="getGLContext()">
+    <canvas id="canvas-element-id" width="800" height="600">
+        Your browser does not support HTML5
+    </canvas>
+</body>
+
+</html>

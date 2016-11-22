@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> How to set and get WebGL context attributes </title>
+    <style type="text/css">
+        canvas {
+            border: 2px dotted grey;
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            width: 800px;
+        }
+    </style>
+    <script>
+        var gl = null;
+
+        function getGLContext() {
+            var canvas = document.getElementById("canvas-element-id");
+            if (canvas == null) {
+                alert("Canvas not found!!!");
+                return;
+            }
+            var names = ["webgl",
+                "experimental-webgl",
+                "webkit-3d",
+                "moz-webgl"
+            ];
+
+            for (var i = 0; i < names.length; ++i) {
+                try {
+                    gl = canvas.getContext(names[i]);
+                } catch (e) {}
+                if (gl) break;
+            }
+            if (gl == null) {
+                alert("WebGL is not available");
+            }
+        }
+
+        function changeColor() {
+            // set color properties
+            gl.clearColor(Math.random(), Math.random(), Math.random(), 1.0);
+            gl.clear(gl.COLOR_BUFFER_BIT);
+            gl.viewport(0, 0, 0, 0);
+
+            // get color properties
+            console.log(gl.getParameter(gl.COLOR_CLEAR_VALUE));
+            // on console output like:
+            //  Float32Array { 0=0.9822385311126709,  1=0.6550713777542114,  2=0.6934784054756165, 1 }
+
+        }
+    </script>
+</head>
+
+<body onload="getGLContext()">
+    <canvas id="canvas-element-id" width="800" height="600">
+        Your browser does not support HTML5
+    </canvas>
+    <button type="button" onclick="changeColor()">Click Me!</button>
+</body>
+
+</html>
