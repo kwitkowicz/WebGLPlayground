@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Shaders, buffers and first drawing</title>
 
-	<!-- pixel shader -->
+    <!-- pixel shader -->
     <script id="shader-fs" type="x-shader/x-fragment">
-        #ifdef GL_ES
-		    precision highp float; 
-		#endif 
-		void main(void) {
-			gl_FragColor = vec4(0.5,0.5,1.0, 1.0);
-		}
+        #ifdef GL_ES 
+            precision highp float; 
+        #endif 
+        void main(void) { 
+            gl_FragColor = vec4(0.5,0.5,1.0, 1.0); 
+        }
     </script>
 
-	<!-- vertex shader-->
+    <!-- vertex shader-->
     <script id="shader-vs" type="x-shader/x-vertex">
-        attribute vec3 aVertexPosition;
-		void main(void) { 
-			gl_Position = vec4(aVertexPosition,1.0);
-		}
+        attribute vec3 aVertexPosition; void main(void) { gl_Position = vec4(aVertexPosition,1.0); }
 
     </script>
 
     <script id="code-js" type="text/javascript">
         var gl = null;
-        var prg = null; 
+        var prg = null;
         var c_width = 0;
         var c_height = 0;
 
@@ -72,7 +70,7 @@
             }
         }
 
-		// Find scripts with shaders and compile them
+        // Find scripts with shaders and compile them
         function getShader(gl, id) {
             var script = document.getElementById(id);
             if (!script) {
@@ -105,7 +103,7 @@
             return shader;
         }
 
-		// Link compiled shaders into usable program and use it to rendering.
+        // Link compiled shaders into usable program and use it to rendering.
         function initShaders() {
             var fgShader = getShader(gl, "shader-fs");
             var vxShader = getShader(gl, "shader-vs");
@@ -123,20 +121,20 @@
             prg.vertexPosition = gl.getAttribLocation(prg, "aVertexPosition");
         }
 
-		// Create buffers and bind indices and vertices to it
+        // Create buffers and bind indices and vertices to it
         function initBuffers() {
 
             vertices = [
-				-0.5, 0.5, 0.0,  //left up
+                -0.5, 0.5, 0.0, //left up
                 -0.5, -0.5, 0.0, //left bottom
-                0.5, -0.5, 0.0,  //right bottom
-                0.5, 0.5, 0.0,   //right up
-				0.0, 0.0, 0.0    //centre
-            ]; 
+                0.5, -0.5, 0.0, //right bottom
+                0.5, 0.5, 0.0, //right up
+                0.0, 0.0, 0.0 //centre
+            ];
 
-			// M - letter
-			indices = [1,0,0,4,4,3,3,2]
-			
+            // M - letter
+            indices = [1, 0, 0, 4, 4, 3, 3, 2]
+
             lineVertexBuffer = gl.createBuffer();
             gl.bindBuffer(gl.ARRAY_BUFFER, lineVertexBuffer);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
